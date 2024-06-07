@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
-interface FinancialRecord {
+export interface FinancialRecord {
   userId: string;
   date: Date;
   description: string;
@@ -8,6 +8,8 @@ interface FinancialRecord {
   category: string;
   paymentMethod: string;
 }
+
+interface FinancialRecordDocument extends FinancialRecord, Document {}
 
 const financialRecordSchema = new mongoose.Schema<FinancialRecord>({
   userId: { type: String, required: true },

@@ -1,5 +1,7 @@
 import express, { Request, Response } from "express";
 import FinancialRecordModel from "../schema/financial-record";
+import { FinancialRecord } from "../schema/financial-record";
+
 
 const router = express.Router();
 
@@ -57,5 +59,36 @@ router.get("/getAllByUserID/:userId", async (req: Request, res: Response) => {
     }
   });
 
+  router.get("/analysis/:id", async (req: Request, res: Response) => {
+    try {
+      const userId = req.params.id;
+      // Retrieve financial records for the user from the database
+      const records = await FinancialRecordModel.find({ userId: userId });
+      // Perform analysis (e.g., calculate total spending per month)
+      const analysisData = performAnalysis(records);
+      // Return the analysis results to the client
+      res.status(200).json(analysisData);
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  });
+
+// Function to perform analysis on financial records
+function performAnalysis(records: FinancialRecord[]) {
+  // Implement your analysis logic here
+  // Example: Calculate total spending per month
+  const monthlySpending: { [key: string]: number } = {};
+
+  records.forEach(record => {
+    const monthYear = `${record.date.getMonth() + 1}-${record.date.getFullYear()}`;
+    if (!monthlySpending[monthYear]) {
+      monthlySpending[monthYear] = record.amount;
+    } else {
+      monthlySpending[monthYear] += record.amount;
+    }
+  });
+
+  return { monthlySpending };
+}
 
 export default router;

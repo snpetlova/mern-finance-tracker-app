@@ -1,0 +1,16 @@
+.total-box {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    background-color: #7dbee8; /* Set the default background color */
+}
+
+.income {
+    color: rgb(1, 109, 1); /* Set the text color for income */
+}
+
+.expense {
+    color: rgb(202, 69, 69); /* Set the text color for expense */
+}
