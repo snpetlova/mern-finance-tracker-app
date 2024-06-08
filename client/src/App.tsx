@@ -11,6 +11,7 @@ import { Auth } from "./pages/auth";
 import { FinancialRecordsProvider } from "./contexts/financial-record-context";
 import { SignedIn, UserButton, useAuth } from "@clerk/clerk-react";
 import { Analysis } from "./pages/analysis"; 
+import NotFound from "./pages/404/404";
 
 function App() {
   return (
@@ -50,7 +51,7 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>

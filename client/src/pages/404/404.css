@@ -1,0 +1,19 @@
+.not-found {
+  text-align: center;
+
+}
+
+.not-found h1 {
+  font-size: 2rem;
+  color: #333;
+}
+
+.not-found p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.not-found img {
+  max-width: 100%;
+  height: auto;
+}
