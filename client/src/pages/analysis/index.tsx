@@ -50,6 +50,11 @@ export const Analysis = () => {
     return { totalIncome, totalExpense, totalBalance };
   }, [records]);
 
+  // Format numbers with comma for better readability
+  const formattedTotalIncome = totalIncome.toLocaleString();
+  const formattedTotalExpense = Math.abs(totalExpense).toLocaleString();
+  const formattedTotalBalance = totalBalance.toLocaleString();
+
   const data = useMemo(() => {
     return {
         labels: records.map(record => record.date), 
@@ -101,15 +106,15 @@ const options = {
       <h1>Check your analysis:</h1>
       <div className={`total-box income`}>
         <div>Total Income:</div>
-        <div>${totalIncome}</div>
+        <div>${formattedTotalIncome}</div>
       </div>
       <div className={`total-box expense`}>
         <div>Total Expense:</div>
-        <div>${Math.abs(totalExpense)}</div>
+        <div>${formattedTotalExpense}</div>
       </div>
       <div className="total-box">
         <div>Total Balance:</div>
-        <div>${totalBalance}</div>
+        <div>${formattedTotalBalance}</div>
       </div>
       <div className="chart-container">
         <Line data={data} options={options} />

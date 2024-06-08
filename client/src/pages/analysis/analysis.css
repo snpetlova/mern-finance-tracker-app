@@ -33,6 +33,7 @@ h1 {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     font-size: 1.2em;
     color: #333;
+    font-weight: bold;
 }
 
 .total-box.income {
