@@ -10,7 +10,7 @@ import { Dashboard } from "./pages/dashboard";
 import { Auth } from "./pages/auth";
 import { FinancialRecordsProvider } from "./contexts/financial-record-context";
 import { SignedIn, UserButton, useAuth } from "@clerk/clerk-react";
-import { Analysis } from "./pages/analysis"; 
+import { Analysis } from "./pages/analysis";
 import NotFound from "./pages/404/404";
 
 function App() {
@@ -18,8 +18,10 @@ function App() {
     <Router>
       <div className="app-container">
         <div className="navbar">
-          <Link to="/">Dashboard</Link>
-          <Link to="/analysis">Analysis</Link>
+          <SignedIn>
+            <Link to="/">Dashboard</Link>
+            <Link to="/analysis">Analysis</Link>
+          </SignedIn>
           <SignedIn>
             <UserButton />
           </SignedIn>
@@ -32,16 +34,11 @@ function App() {
                 <FinancialRecordsProvider>
                   <Dashboard />
                 </FinancialRecordsProvider>
-                </RequireAuth>
+              </RequireAuth>
             }
           />
+          <Route path="/auth" element={<Auth />} />
           <Route
-            path="/auth"
-            element={
-                <Auth />
-            }
-          />
-           <Route
             path="/analysis"
             element={
               <RequireAuth>
@@ -60,10 +57,9 @@ function App() {
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   const { isSignedIn } = useAuth();
-  
+
   // Check if the user is signed in and render the children if true
   if (isSignedIn) {
-    
     return children;
   } else {
     // If not signed in, check if the current pathname is the authentication page
