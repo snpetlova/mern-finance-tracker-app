@@ -1,16 +1,109 @@
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.dashboard-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Total boxes */
 .total-box {
-    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #e0f7fa;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    font-size: 1.2em;
+    color: #333;
+}
+
+.total-box.income {
+    background-color: #d0f8ce;
+}
+
+.total-box.expense {
+    background-color: #ffcdd2;
+}
+
+.total-box div {
+    display: inline-block;
+}
+
+/* Chart container */
+.chart-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Recent Transactions */
+.recent-history {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.recent-history h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.transaction-list {
+    list-style: none;
+    padding: 0;
+}
+
+.transaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px;
-    border-radius: 5px;
-    color: white;
+    border-radius: 8px;
+    background-color: #e0e0e0;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.transaction .description {
+    flex: 1;
+}
+
+.transaction .amount {
     font-weight: bold;
-    background-color: #7dbee8; /* Set the default background color */
 }
 
-.income {
-    color: rgb(1, 109, 1); /* Set the text color for income */
+.positive {
+    color: #4caf50; 
+    background-color: #f4f4f481;
+    font-weight: bold;
 }
 
-.expense {
-    color: rgb(202, 69, 69); /* Set the text color for expense */
+.negative {
+    color: #f44336;
+    background-color: #f4f4f481;
+    font-weight: bold;
 }
+

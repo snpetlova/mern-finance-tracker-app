@@ -7,6 +7,27 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
+export const RecentHistory = () => {
+    const { records } = useFinancialRecords();
+  
+    // Filter out recent transactions (e.g., last 5 records)
+    const recentTransactions = records.slice(-5).reverse(); 
+  
+    return (
+        <div className="recent-history">
+        <h2>Recent Transactions</h2>
+        <div className="transaction-list">
+          {recentTransactions.map((record, index) => (
+            <div className={`transaction ${record.amount > 0 ? 'positive' : 'negative'}`} key={index}>
+              <div className="description">{record.description}</div>
+              <div className="amount">{record.amount > 0 ? `$${record.amount}` : `-$${Math.abs(record.amount)}`}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
 export const Analysis = () => {
   // const { user } = useUser();
   const { records } = useFinancialRecords();
@@ -65,6 +86,9 @@ const options = {
         },
     },
     scales: {
+        x: {
+            display: false, // Hide x-axis labels
+          },
         y: {
             beginAtZero: true,
         },
@@ -90,6 +114,7 @@ const options = {
       <div className="chart-container">
         <Line data={data} options={options} />
       </div>
+      <RecentHistory />
     </div>
   );
 };
