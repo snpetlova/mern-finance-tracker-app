@@ -7,6 +7,8 @@ export const FinancialRecordForm = () => {
   const [amount, setAmount] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [descriptionError, setDescriptionError] = useState<string>("");
+
   const { addRecord } = useFinancialRecords();
 
   const { user } = useUser();
@@ -30,6 +32,17 @@ export const FinancialRecordForm = () => {
     setPaymentMethod("");
   };
 
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setDescription(value);
+
+    if (value.length > 0 && value.length <= 5) {
+      setDescriptionError("Description must be more than 5 characters");
+    } else {
+      setDescriptionError("");
+    }
+  };
+
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
@@ -38,10 +51,11 @@ export const FinancialRecordForm = () => {
           <input
             type="text"
             required
-            className="input"
+            className={`input ${descriptionError ? "input-error" : ""}`}
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={handleDescriptionChange}
           />
+          {descriptionError && <span className="error-message">{descriptionError}</span>}
         </div>
         <div className="form-field">
           <label>Amount:</label>

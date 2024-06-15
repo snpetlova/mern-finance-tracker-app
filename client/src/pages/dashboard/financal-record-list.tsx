@@ -1,9 +1,10 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   FinancialRecord,
   useFinancialRecords,
 } from "../../contexts/financial-record-context";
 import { useTable, Column, CellProps } from "react-table";
+
 
 const categories = [
   "Food",
@@ -29,10 +30,28 @@ const EditableCell: React.FC<EditableCellProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialValue);
+  const [error, setError] = useState("");
+
+  const handleChange = (e: { target: { value: any; }; }) => {
+    const { value } = e.target;
+    setValue(value);
+
+    if (column.id === "description") {
+      if (value.length < 5) {
+        setError("Description must be more than 5 characters");
+      } else {
+        setError(""); // Clear error if validation passes
+      }
+    }
+  };
 
   const onBlur = () => {
     setIsEditing(false);
-    updateRecord(row.index, column.id, value);
+
+    // Update only if there's no error
+    if (!error) {
+      updateRecord(row.index, column.id, value);
+    }
   };
 
   const renderEditableField = () => {
@@ -71,9 +90,10 @@ const EditableCell: React.FC<EditableCellProps> = ({
     return (
       <input
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={handleChange}
         autoFocus
         onBlur={onBlur}
+        className={error && column.id === "description" ? "input-error" : ""}
         style={{ width: "100%" }}
       />
     );
@@ -84,11 +104,16 @@ const EditableCell: React.FC<EditableCellProps> = ({
       onClick={() => editable && setIsEditing(true)}
       style={{ cursor: editable ? "pointer" : "default" }}
     >
-      {isEditing
-        ? renderEditableField()
-        : typeof value === "string"
-        ? value
-        : value.toString()}
+     {isEditing ? (
+        <>
+          {renderEditableField()}
+          {error && column.id === "description" && <span style={{ color: "red" }}>{error}</span>}
+        </>
+      ) : typeof value === "string" ? (
+        value
+      ) : (
+        value.toString()
+      )}
     </div>
   );
 };
